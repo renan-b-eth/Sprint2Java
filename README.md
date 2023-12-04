@@ -19,6 +19,7 @@ Mini sistema java webcam - Mostrando as funcionalidades do mini sistema
   * logar com os usuarios cadastrado
   * listar usuarios
   * movimentar o mouse para um eixo x e y aleatório na tela.
+  * correção de alguns bugs e refatoramento do código.
 
 # Atenção
   Esse projeto será melhor ser implementado com o tasorflow do js no site, pois será uma ferramenta com melhores desempenho, no java é apenas uma réplica do que queremos fazer no backend na web.
