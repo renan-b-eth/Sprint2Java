@@ -2,6 +2,7 @@ package br.com.fiap.beans;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,7 +24,7 @@ public class TelaLogin extends JFrame implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 
 	private String loginPadrao = "admin", senhaPadrao = "admin";
-	private JTextField lblLogin, lblSenha;
+	 JTextField lblLogin, lblSenha;
 	private JButton lblEntrar, lblCadastrar, lblListarUsuarios;
 	// private ImageIcon imagem = new ImageIcon(getClass().getResource("logo.png"));
 	// private JLabel lblLogo = new JLabel(imagem);
@@ -126,12 +127,26 @@ public class TelaLogin extends JFrame implements ActionListener, KeyListener {
 	public ArrayList<Usuario> listarUsuarios(ArrayList<Usuario> usuarios) {
 		
 		for (Usuario usuario : usuarios) {
-			JOptionPane.showMessageDialog(null, "EMAIL: "+usuario.getEmailUsuario());
-			JOptionPane.showMessageDialog(null, "NOME: "+usuario.getNomeUsuario());
-			JOptionPane.showMessageDialog(null, "SENHA: "+usuario.getSenhaUsuario());
+			System.out.println("LISTA DE LOGINS CADASTRADOS");
+			System.out.println("EMAIL: "+usuario.getEmailUsuario());
+			System.out.println("NOME: "+usuario.getNomeUsuario());
+			System.out.println("SENHA: "+usuario.getSenhaUsuario());
 		}
 		
 		return usuarios;
+	}
+	
+	public void validarUsuario(ArrayList<Usuario> usuarios, JTextField lblLogin, JTextField lblSenha){
+		for (Usuario usuario : usuarios) {
+			// se a senha e email for ok loga, se não não loga.
+			// ele pega sempre o primeiro então se o você logar com o 10 login e for ok, vai aparecer 9 mensagens dando erro, pois ele não pega a linha igual o jdbc
+			if(usuario.getEmailUsuario().equals(lblLogin.getText()) && usuario.getSenhaUsuario().equals(lblSenha.getText())) {
+				abrirTela();
+				setVisible(false);
+			} else {
+				JOptionPane.showMessageDialog(null, "Login não cadastrado, cadastre-se primeiro e confira se email e senha estão corretos.");
+			}
+		}
 	}
 
 	// validarLogin
@@ -153,7 +168,8 @@ public class TelaLogin extends JFrame implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == lblEntrar) {
-			validarLogin(lblLogin.getText(), lblSenha.getText());
+			// apenas trocamos o metodo de validação
+			validarUsuario(usuarios,lblLogin,lblSenha);
 		}
 		if (e.getSource() == lblCadastrar) {
 			criarCadastro();

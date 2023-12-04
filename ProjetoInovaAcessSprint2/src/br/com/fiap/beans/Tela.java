@@ -4,8 +4,10 @@ import javax.swing.*;
 
 import org.opencv.core.Core;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +23,7 @@ public class Tela extends JFrame implements ActionListener{
 	JLabel lblLogo2 = new JLabel();
 	JPanel pnlpainel = new JPanel();
 	JButton btnSair = new JButton();
+	private JButton btnMovimentarMouse;
 	private ImageIcon imagem = new ImageIcon(getClass().getResource("..//Imagens//imagem.png"));
 	private JLabel lblLogo3 = new JLabel(imagem);
 	
@@ -29,7 +32,7 @@ public class Tela extends JFrame implements ActionListener{
 		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME); //essa parte precisa pedir ajuda ao professor pois não atualiza a biblioteca
 		//Configuração da tela inicial
 		setTitle("InovaAcess - WEBCAM Mouse");
-		setSize(800,500);
+		setSize(800,600);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -47,12 +50,12 @@ public class Tela extends JFrame implements ActionListener{
 		//Configurações do botão
 		
 		JButton btnSair2 = new JButton("SAIR");
-		btnSair2.setBounds((getX()-btnSair2.getX()/2), 380, 200, 50);
+		btnSair2.setBounds((getX()-btnSair2.getX()/2), 480, 200, 50);
 		btnSair2.setFont(new Font("Arial", Font.BOLD, 30));
 		btnSair2.setForeground(new Color(20,20,20));
 		btnSair2.setBackground(new Color(50,50,50));
 		//Faz a ação do botão
-		btnSair2.addActionListener(this);
+		btnSair2.addActionListener(this::sair);
 		btnSair2.setVisible(true);
 		
 		JButton btnHabWeb = new JButton("Habilitar WebCam");
@@ -63,6 +66,14 @@ public class Tela extends JFrame implements ActionListener{
 		//ação do actionlisterner nesse botão
 		btnHabWeb.addActionListener(this::abrirWebcam);
 		
+		
+		JButton btnMovimentarMouse = new JButton("Movimentar Mouse");
+		btnMovimentarMouse.setBounds((getX()-btnSair2.getX()/2)+100, 390, 300, 50);
+		btnMovimentarMouse.setFont(new Font("Arial", Font.BOLD, 20));
+		btnMovimentarMouse.setForeground(new Color(20,20,20));
+		btnMovimentarMouse.setBackground(new Color(32, 198, 122));
+		//ação do actionlisterner nesse botão
+		btnMovimentarMouse.addActionListener(this::MovimentarMouse);
 		
 		
 		JButton btnDesCamera = new JButton("Desativar CameraMouse");
@@ -84,6 +95,7 @@ public class Tela extends JFrame implements ActionListener{
 		add(btnHabWeb);
 		add(btnDesCamera);
 		add(lblTitulo);
+		add(btnMovimentarMouse);
 		add(lblLogo3);
 		add(pnlpainel);
 		validate();
@@ -92,8 +104,29 @@ public class Tela extends JFrame implements ActionListener{
 	//Faz a ação do botao
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.exit(0);	
+		if(e.getSource() == btnMovimentarMouse) {
+			System.out.println("clicado");
+		}
+		
 	}
+	
+	//deixar mais dinamico posteriormente
+	public void MovimentarMouse(ActionEvent e) {
+		try {
+		    int x= 1000;
+		    int y= 500;
+
+		    Robot robot = new Robot();
+		    robot.mouseMove(x, y);
+		} catch (AWTException a) {
+			
+		}
+	}
+	
+	public void sair(ActionEvent e) {
+		System.exit(0);
+	}
+	 
 	
 	public void abrirWebcam(ActionEvent e) {
 		JOptionPane.showMessageDialog(null, "abriu a webcam", "InovaAcess", JOptionPane.WARNING_MESSAGE);
